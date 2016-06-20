@@ -25,6 +25,6 @@ public class Controller {
 
     @RequestMapping("/ses")
     public List<AllInOneStuff<Double>> ses(){
-        return new SimpleES(dataset).run(0.73, 12);
+        return new SimpleES(dataset).run(0.732089599766635, 12);
     }
 }

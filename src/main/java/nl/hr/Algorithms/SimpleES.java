@@ -2,6 +2,7 @@ package nl.hr.Algorithms;
 
 import lombok.AllArgsConstructor;
 import nl.hr.domain.AllInOneStuff;
+import nl.hr.domain.Tuple;
 import nl.hr.domain.TwoDPoints;
 
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ public class SimpleES {
 
     public List<AllInOneStuff<Double>> run(double smoothingFactor, int addedTime){
         for(int i = 0; i < dataset.size(); i++){
-            double predictedY = calcPredictedY(smoothingFactor, i);
-            double error = Math.abs(dataset.get(i).getY() - predictedY);
+            Tuple<Double, Double> predictedY = calcPredictedY(smoothingFactor, i);
+            double error = Math.abs(dataset.get(i).getY() - predictedY.get_1());
             allinone.add(new AllInOneStuff<Double>(dataset.get(i).getX(),
                                                dataset.get(i).getY(),
-                                               predictedY,
-                                               smoothingFactor, null, error, Math.pow(error, 2)));
+                                               predictedY.get_1(),
+                                               smoothingFactor, null, predictedY.get_2(), Math.pow(error, 2)));
         }
 
         for(int i = 0; i < addedTime; i++){
@@ -43,19 +44,22 @@ public class SimpleES {
         return allinone;
     }
 
-    public double calcPredictedY(double smoothingFactor, int time){
+    public Tuple<Double, Double> calcPredictedY(double smoothingFactor, int time){
         if(time == 0) {
-            return smoothingFactor*(dataset.get(time).getY())+((1-smoothingFactor)*c(smoothingFactor));
+            return firstForecast(smoothingFactor);
         }
-        double prev = allinone.get(time-1).getPredictedY();
+
+
+        double prevForecast = allinone.get(time-1).getPredictedY();
         double curr = dataset.get(time).getY();
-        return prev+((curr-prev)*smoothingFactor);
+        double forecastError = curr-prevForecast;
+        return new Tuple<Double, Double>(prevForecast+(smoothingFactor*forecastError), forecastError);
     }
 
-    private double c(double smoothingFactor){
+    private Tuple<Double, Double> firstForecast(double smoothingFactor){
         double avg = calcAvg();
         double forecastError = (dataset.get(0).getY() - avg);
-        return avg + (smoothingFactor * forecastError);
+        return new Tuple<Double, Double>(avg + (smoothingFactor * forecastError), forecastError);
     }
 
     private double calcAvg(){
