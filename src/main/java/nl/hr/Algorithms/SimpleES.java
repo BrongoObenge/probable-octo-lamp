@@ -2,6 +2,7 @@ package nl.hr.Algorithms;
 
 import lombok.AllArgsConstructor;
 import nl.hr.domain.AllInOneStuff;
+import nl.hr.domain.OwnMath;
 import nl.hr.domain.Tuple;
 import nl.hr.domain.TwoDPoints;
 
@@ -29,7 +30,7 @@ public class SimpleES {
             allinone.add(new AllInOneStuff<Double>(dataset.get(i).getX(),
                                                dataset.get(i).getY(),
                                                predictedY.get_1(),
-                                               smoothingFactor, null, predictedY.get_2(), Math.pow(error, 2)));
+                                               smoothingFactor, null, predictedY.get_2(), new OwnMath().pow(predictedY.get_2(), 2)));
         }
 
         for(int i = 0; i < addedTime; i++){
