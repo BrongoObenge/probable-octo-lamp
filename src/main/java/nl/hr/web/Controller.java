@@ -60,7 +60,6 @@ public class Controller {
     }
 
     private XYDataset createDataset(List<AllInOneStuff<Double>> data) {
-        //Examples from http://www.tutorialspoint.com/jfreechart/jfreechart_xy_chart.htm
         XYSeries sword = new XYSeries("Swords",false,false);
         XYSeries smoothing = new XYSeries("smoothing",false,false);
         XYSeries forecast = new XYSeries("forecast",false,false);
