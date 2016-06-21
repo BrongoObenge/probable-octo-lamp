@@ -4,6 +4,7 @@ package nl.hr.web;
  * Created by j on 6/20/16.
  */
 
+import nl.hr.Algorithms.DoubleES;
 import nl.hr.Algorithms.SimpleES;
 import nl.hr.domain.AllInOneStuff;
 import nl.hr.domain.MetaData;
@@ -28,5 +29,15 @@ public class Controller {
     @RequestMapping("/ses")
     public Tuple<List<AllInOneStuff<Double>>, MetaData> ses(){
         return new SimpleES(dataset).run(12, 500);
+    }
+
+    @RequestMapping("/des")
+    public Object des(){
+        double alpha = 0.659100046560163;
+        double gamma = 0.0531171804609812;
+
+
+        return new DoubleES(dataset).run(155.88, 0.8369, alpha, gamma);
+
     }
 }

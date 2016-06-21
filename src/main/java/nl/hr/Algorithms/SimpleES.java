@@ -44,7 +44,7 @@ public class SimpleES {
             allinone.add(new AllInOneStuff<Double>(dataset.get(i).getX(),
                                                dataset.get(i).getY(),
                                                predictedY.get_1(),
-                                               smoothingFactor, null, predictedY.get_2(), new OwnMath().pow(predictedY.get_2(), 2)));
+                                               smoothingFactor, null,null, predictedY.get_2(), new OwnMath().pow(predictedY.get_2(), 2)));
         }
 
         for(int i = 0; i < addedTime; i++){
@@ -53,7 +53,7 @@ public class SimpleES {
                    allinone.get(allinone.size()-1).getPredictedY(),
                    allinone.get(allinone.size()-1).getPredictedY(),
                    smoothingFactor,
-                   null, null, null));
+                   null,null, null, null));
         }
         List<AllInOneStuff<Double>> mrResult = allinone;
         this.emptyList();

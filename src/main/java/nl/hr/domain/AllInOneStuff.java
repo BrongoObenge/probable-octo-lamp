@@ -16,7 +16,8 @@ public class AllInOneStuff<T> {
     private T y;
     private T predictedY;
     private T alpha;
-    private T beta;
+    private T gamma;
+    private T trend;
     private T errors;
     private T sumOfSquaredErrors;
 }
