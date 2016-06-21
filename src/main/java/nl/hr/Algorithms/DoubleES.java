@@ -5,9 +5,6 @@ import nl.hr.domain.TwoDPoints;
 
 import java.util.List;
 
-/**
- * Created by j on 6/20/16.
- */
 
 @AllArgsConstructor
 public class DoubleES<T> {
@@ -19,3 +16,4 @@ public class DoubleES<T> {
 
     }
 }
+

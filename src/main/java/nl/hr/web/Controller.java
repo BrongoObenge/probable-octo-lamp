@@ -6,6 +6,8 @@ package nl.hr.web;
 
 import nl.hr.Algorithms.SimpleES;
 import nl.hr.domain.AllInOneStuff;
+import nl.hr.domain.MetaData;
+import nl.hr.domain.Tuple;
 import nl.hr.domain.TwoDPoints;
 import nl.hr.services.LoadDataService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,7 @@ public class Controller {
     }
 
     @RequestMapping("/ses")
-    public List<AllInOneStuff<Double>> ses(){
-        return new SimpleES(dataset).run(0.732089599766635, 12);
+    public Tuple<List<AllInOneStuff<Double>>, MetaData> ses(){
+        return new SimpleES(dataset).run(12, 500);
     }
 }
