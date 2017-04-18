@@ -34,7 +34,7 @@ public class DoubleES {
                     Tuple<List<AllInOneStuff<Double>>, Double> gammaResult = exec(firstForecast, firstTrend, alpha, gamma, addedTime);
                     double error = gammaResult.get_2();
                     if(error < lowestErrorGamma){
-                        error = lowestErrorGamma;
+                        lowestErrorGamma = error;
                         optimalGamma = gamma;
                     }
                 }
@@ -69,10 +69,10 @@ public class DoubleES {
             double actual = dataset.get(i).getY();
             double actualX = dataset.get(i).getX();
             double oneStepForecast = oneStepForecast(prevTrend, prevForecast);
-            double forecastError = forecastError(actual, oneStepForecast);
+            double forecastError = forecastError(actual, prevForecast); //todo
             double predictedY = predictedY(oneStepForecast, alpha, forecastError);
             double trend = newTrend(prevTrend, alpha, gamma, forecastError);
-            sumOfErrors += forecastError;
+            sumOfErrors += new OwnMath().pow(forecastError,2);
             allinone.add(new AllInOneStuff<Double>(actualX, actual, predictedY, alpha, gamma, trend, forecastError, new OwnMath().pow(forecastError, 2)));
         }
         int size = allinone.size();

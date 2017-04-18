@@ -35,7 +35,7 @@ import java.util.List;
 public class Controller {
     private List<TwoDPoints<Double>> dataset = new LoadDataService().read();
 
-    private String saveLocationPrefix = "C:/Users/j/";
+    private String saveLocationPrefix = "/home/j/DatasciPlots";
     @RequestMapping("/data")
     public List<TwoDPoints<Double>> home(){
         return dataset;
@@ -51,10 +51,10 @@ public class Controller {
     @RequestMapping("/des")
     public Object des(){
         double alpha = 0.659100046560163;
-        double gamma = 0.0531171804609812;
+        double beta = 0.0531171804609812;
 
 
-        Tuple<List<AllInOneStuff<Double>>, MetaData> result = new DoubleES(dataset).run(155.88, 0.8369, 500, 500, 12);
+        Tuple<List<AllInOneStuff<Double>>, MetaData> result = new DoubleES(dataset).run(155.88, 0.8369, 5000, 5000, 12);
         this.createAndSaveChart(result, "DES-");
         return result;
     }
@@ -82,7 +82,7 @@ public class Controller {
         XYDataset dataset = createDataset(data.get_1());
         MetaData metaData = data.get_2();
         String chartTitle = String.format("Sword Forecasting SES \n" +
-                "Alpha: %s  \nGamma: %s \nSSE: %s",metaData.getOptimalAlpha(),metaData.getOptimalGamma(), metaData.getSSE());
+                "Alpha: %s  \nBeta: %s \nSSE: %s",metaData.getOptimalAlpha(),metaData.getOptimalGamma(), metaData.getSSE());
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
                 "Months","Demands",dataset,
                 PlotOrientation.VERTICAL,true,false,false);
