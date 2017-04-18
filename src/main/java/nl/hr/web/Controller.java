@@ -54,7 +54,7 @@ public class Controller {
         double beta = 0.0531171804609812;
 
 
-        Tuple<List<AllInOneStuff<Double>>, MetaData> result = new DoubleES(dataset).run(155.88, 0.8369, 5000, 5000, 12);
+        Tuple<List<AllInOneStuff<Double>>, MetaData> result = new DoubleES(dataset).run(155.88, 0.8369, 500000, 500000, 12);
         this.createAndSaveChart(result, "DES-");
         return result;
     }

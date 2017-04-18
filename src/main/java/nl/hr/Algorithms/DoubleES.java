@@ -5,6 +5,7 @@ import nl.hr.domain.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class DoubleES {
@@ -25,12 +26,17 @@ public class DoubleES {
 
         double optimalAlpha = 0;
         double lowestErrorAlpha = Double.MAX_VALUE;
+        double alpha = new Random().nextDouble();
 
+        double gamma = 0;
         for(int i = 0; i<limitAlpha; i++){
-            double alpha = new Random().nextDouble();
+
             if(!isGammaCalculated){
                 for(int g = 0; g<limitGamma; g++){
-                    double gamma = new Random().nextDouble();
+                    if(g>limitGamma/2){
+                        gamma = ThreadLocalRandom.current().nextDouble(optimalGamma-0.1, optimalGamma+0.1);        //Generation of Gamma
+
+                    }else{ gamma = new Random(new Double(optimalGamma).longValue()).nextDouble();}
                     Tuple<List<AllInOneStuff<Double>>, Double> gammaResult = exec(firstForecast, firstTrend, alpha, gamma, addedTime);
                     double error = gammaResult.get_2();
                     if(error < lowestErrorGamma){
@@ -40,7 +46,11 @@ public class DoubleES {
                 }
                 isGammaCalculated = true;
             }else{
-
+                if(i>limitAlpha/2){
+                    alpha = ThreadLocalRandom.current().nextDouble(optimalAlpha-0.4, optimalAlpha+0.4);        //TODO alpha generation
+                } else {
+                    alpha = ThreadLocalRandom.current().nextDouble(0,1);
+                }
                 Tuple<List<AllInOneStuff<Double>>, Double> alphaResult = exec(firstForecast, firstTrend, alpha, optimalGamma, addedTime);
                 double error = alphaResult.get_2();
                 if(error < lowestErrorAlpha){
